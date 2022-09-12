@@ -14,7 +14,7 @@ import javax.persistence.Entity;
 @SuperBuilder
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = false)
-public class Technology {
+public class Technology extends GeneralEntity {
     @EqualsAndHashCode.Include
     private String name;
 }
