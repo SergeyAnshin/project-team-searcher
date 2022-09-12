@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
+import java.util.Set;
 
 @Entity
 @NoArgsConstructor
@@ -17,4 +19,6 @@ import javax.persistence.Entity;
 public class Technology extends GeneralEntity {
     @EqualsAndHashCode.Include
     private String name;
+    @ManyToMany(mappedBy = "techStack")
+    private Set<Project> projects;
 }

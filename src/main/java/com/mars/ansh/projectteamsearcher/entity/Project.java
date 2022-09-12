@@ -7,6 +7,9 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import java.util.Set;
 
 @Entity
@@ -19,4 +22,8 @@ public class Project extends GeneralEntity {
     private String name;
     private String description;
     private String link;
+    @ManyToMany
+    @JoinTable(name="project_technology", joinColumns = @JoinColumn(name="project_id"),
+            inverseJoinColumns= @JoinColumn(name="technology_id"))
+    private Set<Technology> techStack;
 }
