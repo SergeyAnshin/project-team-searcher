@@ -26,4 +26,8 @@ public class Project extends GeneralEntity {
     @JoinTable(name="project_technology", joinColumns = @JoinColumn(name="project_id"),
             inverseJoinColumns= @JoinColumn(name="technology_id"))
     private Set<Technology> techStack;
+    @ManyToMany
+    @JoinTable(name="project_team_member", joinColumns = @JoinColumn(name="project_id"),
+            inverseJoinColumns= @JoinColumn(name="team_member_id"))
+    private Set<TeamMember> team;
 }

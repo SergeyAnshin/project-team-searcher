@@ -9,6 +9,7 @@ import lombok.experimental.SuperBuilder;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import java.util.Set;
 
 @Entity
 @NoArgsConstructor
@@ -19,4 +20,6 @@ import javax.persistence.ManyToOne;
 public class TeamMember extends GeneralEntity {
     @ManyToOne
     private Position position;
+    @ManyToMany(mappedBy = "team")
+    private Set<Project> projects;
 }
