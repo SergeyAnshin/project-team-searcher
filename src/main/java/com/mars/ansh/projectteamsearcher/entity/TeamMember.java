@@ -18,6 +18,7 @@ import java.util.Set;
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = false)
 public class TeamMember extends GeneralEntity {
+    @EqualsAndHashCode.Include
     @ManyToOne
     private Position position;
     @ManyToMany(mappedBy = "team")
