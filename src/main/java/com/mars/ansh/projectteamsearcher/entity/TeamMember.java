@@ -6,6 +6,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
@@ -19,7 +20,7 @@ import java.util.Set;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = false)
 public class TeamMember extends GeneralEntity {
     @EqualsAndHashCode.Include
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.MERGE )
     private Position position;
     @ManyToMany(mappedBy = "team")
     private Set<Project> projects;
