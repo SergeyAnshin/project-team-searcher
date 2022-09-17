@@ -9,8 +9,8 @@ import org.mapstruct.Mapping;
 @Mapper(uses = { TechnologyMapper.class, TeamMemberMapper.class })
 public interface ProjectMapper {
 
-    @Mapping(source = "technologies", target = "techStack")
-    @Mapping(source = "requiredPositions", target = "team")
+    @Mapping(source = "technologies", target = "techStack", ignore = true)
+    @Mapping(source = "requiredPositions", target = "team", ignore = true)
     Project projectDtoToProject(ProjectDto projectDto);
 
     @InheritInverseConfiguration
