@@ -6,7 +6,7 @@ public class EntityNotExistsException extends BusinessException {
         super();
     }
 
-    public EntityNotExistsException(String messageSourceCode) {
-        super(messageSourceCode);
+    public EntityNotExistsException(String messageSourceCode, String entityName) {
+        super(messageSourceCode, entityName);
     }
 }
