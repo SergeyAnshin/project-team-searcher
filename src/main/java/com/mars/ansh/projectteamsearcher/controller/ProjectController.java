@@ -7,19 +7,21 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.net.URI;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/projects")
 public class ProjectController {
-    private static final String GENERAL_ENDPOINT_FOR_PROJECT = "/projects";
+    private static final String GENERAL_ENDPOINT_FOR_PROJECT = "/projects/";
     private final ProjectService projectService;
 
     @PostMapping
-    public ResponseEntity<Object> save(@RequestBody ProjectDto projectDto) {
+    public ResponseEntity<Object> save(@RequestBody @Valid ProjectDto projectDto) {
         Project savedProject = projectService.save(projectDto);
-        return ResponseEntity.created(URI.create(String.join("/", GENERAL_ENDPOINT_FOR_PROJECT,
-                String.valueOf(savedProject.getId())))).build();
+        return ResponseEntity.created(URI.create(GENERAL_ENDPOINT_FOR_PROJECT
+                        .concat(String.valueOf(savedProject.getId()))))
+                .build();
     }
 }
