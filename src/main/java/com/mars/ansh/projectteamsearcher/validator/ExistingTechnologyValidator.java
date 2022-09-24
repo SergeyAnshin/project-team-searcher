@@ -2,18 +2,20 @@ package com.mars.ansh.projectteamsearcher.validator;
 
 import com.mars.ansh.projectteamsearcher.service.TechnologyService;
 import com.mars.ansh.projectteamsearcher.validator.constraint.ExistingTechnology;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
 @Component
+@RequiredArgsConstructor
 public class ExistingTechnologyValidator implements ConstraintValidator<ExistingTechnology, String> {
     private final TechnologyService technologyService;
 
-    public ExistingTechnologyValidator(TechnologyService technologyService) {
-        this.technologyService = technologyService;
-    }
+//    public ExistingTechnologyValidator(TechnologyService technologyService) {
+//        this.technologyService = technologyService;
+//    }
 
     @Override
     public boolean isValid(String value, ConstraintValidatorContext context) {
