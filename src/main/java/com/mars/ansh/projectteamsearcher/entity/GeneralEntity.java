@@ -1,5 +1,6 @@
 package com.mars.ansh.projectteamsearcher.entity;
 
+import com.mars.ansh.projectteamsearcher.repository.listener.GeneralEntityListener;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -10,6 +11,7 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @MappedSuperclass
+@EntityListeners(GeneralEntityListener.class)
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
