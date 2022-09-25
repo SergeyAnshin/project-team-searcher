@@ -37,12 +37,26 @@ CREATE TABLE project_technology (
     CONSTRAINT uk_project_technology UNIQUE (project_id, technology_id)
 );
 
---changeset SergeyAnshin:add-foreign_key-project_technology-project
+--changeset SergeyAnshin:add-foreign-key-project_technology-project
 ALTER TABLE project_technology
 ADD CONSTRAINT fk_project_technology_project_id
 FOREIGN KEY (project_id) REFERENCES project (project_id);
 
---changeset SergeyAnshin:add-foreign_key-project_technology-technology
+--changeset SergeyAnshin:add-foreign-key-project-technology-technology
 ALTER TABLE project_technology
 ADD CONSTRAINT fk_project_technology_technology_id
 FOREIGN KEY (technology_id) REFERENCES technology (technology_id);
+
+--changeset SergeyAnshin:create-team-member-table
+CREATE TABLE team_member (
+    team_member_id INT AUTO_INCREMENT,
+    position_id INT NOT NULL,
+    create_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    update_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT pk_team_member_id PRIMARY KEY (team_member_id)
+);
+
+--changeset SergeyAnshin:add-foreign-key-team-member-position
+ALTER TABLE team_member
+ADD CONSTRAINT fk_team_member_position_id
+FOREIGN KEY (position_id) REFERENCES position (position_id);
