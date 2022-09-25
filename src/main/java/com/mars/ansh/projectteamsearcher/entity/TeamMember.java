@@ -6,13 +6,16 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.util.Set;
 
 @Entity
+@AttributeOverrides({
+        @AttributeOverride(
+                name = "id",
+                column = @Column(name = "team_member_id")
+        )
+})
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
@@ -21,6 +24,7 @@ import java.util.Set;
 public class TeamMember extends GeneralEntity {
     @EqualsAndHashCode.Include
     @ManyToOne(cascade = CascadeType.MERGE )
+    @JoinColumn(name="position_id", nullable=false)
     private Position position;
     @ManyToMany(mappedBy = "team")
     private Set<Project> projects;

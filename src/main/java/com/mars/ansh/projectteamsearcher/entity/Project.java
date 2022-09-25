@@ -11,14 +11,22 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
+@AttributeOverrides({
+        @AttributeOverride(
+                name = "id",
+                column = @Column(name = "project_id")
+        )
+})
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = false)
 public class Project extends GeneralEntity {
+    @Column(nullable = false)
     private String name;
     private String description;
+    @Column(unique = true, nullable = false)
     private String link;
     @ManyToMany(cascade = { CascadeType.MERGE })
     @JoinTable(name="project_technology", joinColumns = @JoinColumn(name="project_id"),

@@ -22,7 +22,8 @@ public abstract class GeneralEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
     private long id;
-    @Column(updatable = false)
+    @Column(updatable = false, name = "create_date")
     private LocalDateTime creationDateTime;
+    @Column(name = "update_date")
     private LocalDateTime updateDateTime;
 }
