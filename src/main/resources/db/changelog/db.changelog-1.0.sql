@@ -60,3 +60,20 @@ CREATE TABLE team_member (
 ALTER TABLE team_member
 ADD CONSTRAINT fk_team_member_position_id
 FOREIGN KEY (position_id) REFERENCES position (position_id);
+
+--changeset SergeyAnshin:create-project-team-member-table
+CREATE TABLE project_team_member (
+    project_id INT NOT NULL,
+    team_member_id INT NOT NULL,
+    CONSTRAINT uk_project_team_member UNIQUE (project_id,team_member_id)
+);
+
+--changeset SergeyAnshin:add-foreign-key-project-team-member-project
+ALTER TABLE project_team_member
+ADD CONSTRAINT fk_project_team_member_project_id
+FOREIGN KEY (project_id) REFERENCES project (project_id);
+
+--changeset SergeyAnshin:add-foreign-key-project-team-member-team-member
+ALTER TABLE project_team_member
+ADD CONSTRAINT fk_project_team_member_team_member_id
+FOREIGN KEY (team_member_id) REFERENCES team_member (team_member_id);
