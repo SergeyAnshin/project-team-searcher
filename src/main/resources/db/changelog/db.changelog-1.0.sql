@@ -77,3 +77,10 @@ FOREIGN KEY (project_id) REFERENCES project (project_id);
 ALTER TABLE project_team_member
 ADD CONSTRAINT fk_project_team_member_team_member_id
 FOREIGN KEY (team_member_id) REFERENCES team_member (team_member_id);
+
+--changeset SergeyAnshin:insert-technology-init-data
+INSERT INTO technology(create_date, update_date, name) VALUES (NOW(),NOW(),'Java'),(NOW(),NOW(),'JS');
+
+--changeset SergeyAnshin:insert-position-init-data
+INSERT INTO position(create_date, update_date,name) VALUES (NOW(),NOW(),'AQA'),(NOW(),NOW(),'Back-end'),
+(NOW(),NOW(),'PM');
