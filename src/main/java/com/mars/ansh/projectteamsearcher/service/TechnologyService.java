@@ -3,6 +3,7 @@ package com.mars.ansh.projectteamsearcher.service;
 import com.mars.ansh.projectteamsearcher.entity.Technology;
 import com.mars.ansh.projectteamsearcher.repository.TechnologyRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.Set;
@@ -16,6 +17,7 @@ public class TechnologyService {
         return technologyRepository.findAllByNameIn(names);
     }
 
+    @Cacheable(value = "technologyNames")
     public Set<String> findAllTechnologyNames() {
         return technologyRepository.findAllTechnologyNames();
     }
