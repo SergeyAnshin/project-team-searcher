@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -23,5 +24,11 @@ public class ProjectController {
         return ResponseEntity.created(URI.create(GENERAL_ENDPOINT_FOR_PROJECT
                         .concat(String.valueOf(savedProject.getId()))))
                 .build();
+    }
+
+    @GetMapping
+    public ResponseEntity<List<ProjectDto>> findAllByPage(int pageNumber, @RequestParam(required = false,
+            defaultValue = "${app.pagination.project.default-page-size}") int pageSize) {
+        return ResponseEntity.ok(projectService.findAllByPage(pageNumber, pageSize));
     }
 }
