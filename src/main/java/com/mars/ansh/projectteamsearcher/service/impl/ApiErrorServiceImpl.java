@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 
+import javax.validation.ConstraintViolationException;
 import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
@@ -40,6 +41,20 @@ public class ApiErrorServiceImpl implements ApiErrorService {
                         .message(fieldError.getDefaultMessage())
                         .code(HttpStatus.BAD_REQUEST.value())
                         .field(fieldError.getField())
+                        .build())
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<? super ApiValidationError> generateMessage(ConstraintViolationException exception) {
+        return exception.getConstraintViolations()
+                .stream()
+                .map(cv -> ApiValidationError.builder()
+                        .message(cv.getMessage())
+                        .code(HttpStatus.BAD_REQUEST.value())
+                        .field(cv.getPropertyPath()
+                                .toString()
+                                .substring(cv.getPropertyPath().toString().indexOf(".") + 1))
                         .build())
                 .collect(Collectors.toList());
     }
