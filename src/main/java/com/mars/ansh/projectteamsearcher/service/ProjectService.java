@@ -7,9 +7,13 @@ import com.mars.ansh.projectteamsearcher.exception.EntityAlreadyExistsException;
 import com.mars.ansh.projectteamsearcher.mapper.ProjectMapper;
 import com.mars.ansh.projectteamsearcher.repository.ProjectRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Locale;
 
 @Service
@@ -17,6 +21,8 @@ import java.util.Locale;
 public class ProjectService {
     private static final String ENTITY_EXISTS_MESSAGE_CODE = "exception.entity.exists.message";
     private static final String ENTITY_NAME_PROJECT = "entity.name.project";
+    @Value("${app.pagination.project.sort-field}")
+    private String sortField;
     private final ProjectRepository projectRepository;
     private final TechnologyService technologyService;
     private final PositionService positionService;
@@ -36,5 +42,11 @@ public class ProjectService {
                 .map(position -> TeamMember.builder().position(position).build())
                 .forEach(project::addTeamMember);
         return projectRepository.save(project);
+    }
+
+    public List<ProjectDto> findAllByPage(String pageNumber, String pageSize) {
+        return projectMapper.projectsToProjectDtoList(projectRepository.findAll(PageRequest.of(Integer.parseInt(pageNumber),
+                Integer.parseInt(pageSize),
+                Sort.by(Sort.Order.desc(sortField)))).getContent());
     }
 }
