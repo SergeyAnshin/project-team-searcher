@@ -29,8 +29,8 @@ public class ExternalExceptionController extends ResponseEntityExceptionHandler 
     }
 
     @ExceptionHandler(ConstraintViolationException.class)
-    public ResponseEntity<List<? super ApiValidationError>> handleConstraintViolationException(ConstraintViolationException exception) {
+    public ResponseEntity<List<? super ApiValidationError>> handleConstraintException(ConstraintViolationException ex) {
         return ResponseEntity.badRequest()
-                .body(apiErrorService.generateMessage(exception));
+                .body(apiErrorService.generateMessage(ex));
     }
 }
