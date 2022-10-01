@@ -44,8 +44,9 @@ public class ProjectService {
         return projectRepository.save(project);
     }
 
-    public List<ProjectDto> findAllByPage(int pageNumber, int pageSize) {
-        return projectMapper.projectsToProjectDtoList(projectRepository.findAll(PageRequest.of(pageNumber,
-                pageSize, Sort.by(Sort.Order.desc(sortField)))).getContent());
+    public List<ProjectDto> findAllByPage(String pageNumber, String pageSize) {
+        return projectMapper.projectsToProjectDtoList(projectRepository.findAll(PageRequest.of(Integer.parseInt(pageNumber),
+                Integer.parseInt(pageSize),
+                Sort.by(Sort.Order.desc(sortField)))).getContent());
     }
 }
