@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Digits;
+import javax.validation.constraints.Pattern;
 import java.net.URI;
 import java.util.List;
 
@@ -38,5 +39,12 @@ public class ProjectController {
                     message = "{validation.constraint.Digits.integer.message}")
             @RequestParam(required = false, defaultValue = "${app.pagination.project.default-page-size}") String pageSize) {
         return ResponseEntity.ok(projectService.findAllByPage(pageNumber, pageSize));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Object> deleteById(@PathVariable @Range(min = 1) @Pattern(regexp = "^[0-9]+$",
+            message = "{validation.constraint.Digits.integer.message}") String id) {
+        projectService.deleteById(id);
+        return ResponseEntity.noContent().build();
     }
 }
