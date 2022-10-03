@@ -2,6 +2,7 @@ package com.mars.ansh.projectteamsearcher.controller;
 
 import com.mars.ansh.projectteamsearcher.entity.ApiError;
 import com.mars.ansh.projectteamsearcher.exception.BusinessException;
+import com.mars.ansh.projectteamsearcher.exception.EntityNotExistsException;
 import com.mars.ansh.projectteamsearcher.service.ApiErrorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +18,12 @@ public class BusinessExceptionController {
 
     @ExceptionHandler(BusinessException.class)
     public ResponseEntity<ApiError> handleBusinessException(BusinessException exception, Locale locale) {
+        return ResponseEntity.badRequest()
+                .body(apiErrorService.generateMessage(exception, locale));
+    }
+
+    @ExceptionHandler(EntityNotExistsException.class)
+    public ResponseEntity<ApiError> handleEntityNotExistsException(EntityNotExistsException exception, Locale locale) {
         return ResponseEntity.badRequest()
                 .body(apiErrorService.generateMessage(exception, locale));
     }
