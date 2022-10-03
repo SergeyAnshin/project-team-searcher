@@ -3,6 +3,7 @@ package com.mars.ansh.projectteamsearcher.service.impl;
 import com.mars.ansh.projectteamsearcher.entity.ApiError;
 import com.mars.ansh.projectteamsearcher.entity.ApiValidationError;
 import com.mars.ansh.projectteamsearcher.exception.BusinessException;
+import com.mars.ansh.projectteamsearcher.exception.EntityNotExistsException;
 import com.mars.ansh.projectteamsearcher.service.ApiErrorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.MessageSource;
@@ -57,5 +58,17 @@ public class ApiErrorServiceImpl implements ApiErrorService {
                                 .substring(cv.getPropertyPath().toString().indexOf(".") + 1))
                         .build())
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public ApiError generateMessage(EntityNotExistsException exception, Locale locale) {
+        return ApiError.builder()
+                .message(messageSource.getMessage(exception.getMessageSourceCode(),
+                        new Object[]{ messageSource.getMessage(exception.getEntityName(), null, locale),
+                                exception.getMissingValue() },
+                        messageSource.getMessage(DEFAULT_ERROR_MESSAGE_CODE, null, locale),
+                        locale))
+                .code(HttpStatus.BAD_REQUEST.value())
+                .build();
     }
 }
