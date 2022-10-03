@@ -26,7 +26,8 @@ public class ApiErrorServiceImpl implements ApiErrorService {
     public ApiError generateMessage(BusinessException exception, Locale locale) {
         return ApiError.builder()
                 .message(messageSource.getMessage(exception.getMessageSourceCode(),
-                        new Object[]{ exception.getEntityName() },
+                        new Object[]{ messageSource.getMessage(exception.getEntityNameMessageCode(),
+                                null, locale) },
                         messageSource.getMessage(DEFAULT_ERROR_MESSAGE_CODE, null, locale),
                         locale))
                 .code(HttpStatus.BAD_REQUEST.value())
@@ -64,7 +65,7 @@ public class ApiErrorServiceImpl implements ApiErrorService {
     public ApiError generateMessage(EntityNotExistsException exception, Locale locale) {
         return ApiError.builder()
                 .message(messageSource.getMessage(exception.getMessageSourceCode(),
-                        new Object[]{ messageSource.getMessage(exception.getEntityName(), null, locale),
+                        new Object[]{ messageSource.getMessage(exception.getEntityNameMessageCode(), null, locale),
                                 exception.getMissingValue() },
                         messageSource.getMessage(DEFAULT_ERROR_MESSAGE_CODE, null, locale),
                         locale))
