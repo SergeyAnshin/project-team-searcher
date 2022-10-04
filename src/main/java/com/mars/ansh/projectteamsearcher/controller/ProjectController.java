@@ -1,6 +1,7 @@
 package com.mars.ansh.projectteamsearcher.controller;
 
 import com.mars.ansh.projectteamsearcher.dto.ProjectDto;
+import com.mars.ansh.projectteamsearcher.dto.ProjectInfoDto;
 import com.mars.ansh.projectteamsearcher.entity.Project;
 import com.mars.ansh.projectteamsearcher.service.ProjectService;
 import lombok.RequiredArgsConstructor;
@@ -46,5 +47,11 @@ public class ProjectController {
             message = "{validation.constraint.Digits.integer.message}") String id) {
         projectService.deleteById(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<ProjectInfoDto> findById(@PathVariable @Range(min = 1) @Pattern(regexp = "^[0-9]+$",
+            message = "{validation.constraint.Digits.integer.message}") String id) {
+        return ResponseEntity.ok(projectService.findById(id));
     }
 }
