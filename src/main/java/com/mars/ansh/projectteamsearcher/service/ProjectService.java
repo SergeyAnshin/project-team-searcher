@@ -1,6 +1,7 @@
 package com.mars.ansh.projectteamsearcher.service;
 
 import com.mars.ansh.projectteamsearcher.dto.ProjectDto;
+import com.mars.ansh.projectteamsearcher.dto.ProjectInfoDto;
 import com.mars.ansh.projectteamsearcher.entity.Project;
 import com.mars.ansh.projectteamsearcher.entity.TeamMember;
 import com.mars.ansh.projectteamsearcher.exception.EntityAlreadyExistsException;
@@ -15,6 +16,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -55,5 +57,13 @@ public class ProjectService {
         } catch (EmptyResultDataAccessException exception) {
             throw new EntityNotExistsException(INCORRECT_ID_MESSAGE_CODE, ENTITY_NAME_PROJECT_MESSAGE_CODE, id);
         }
+    }
+
+    public ProjectInfoDto findById(String id) {
+        return projectRepository.findById(Long.parseLong(id))
+                .map(projectMapper::projectToProjectInfoDto)
+                .orElseThrow(() -> {
+                    throw new EntityNotExistsException(INCORRECT_ID_MESSAGE_CODE, ENTITY_NAME_PROJECT_MESSAGE_CODE, id);
+                });
     }
 }

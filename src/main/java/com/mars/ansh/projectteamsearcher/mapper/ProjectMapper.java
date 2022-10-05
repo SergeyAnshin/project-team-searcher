@@ -1,6 +1,7 @@
 package com.mars.ansh.projectteamsearcher.mapper;
 
 import com.mars.ansh.projectteamsearcher.dto.ProjectDto;
+import com.mars.ansh.projectteamsearcher.dto.ProjectInfoDto;
 import com.mars.ansh.projectteamsearcher.entity.Project;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -19,4 +20,8 @@ public interface ProjectMapper {
     ProjectDto projectToProjectDto(Project project);
 
     List<ProjectDto> projectsToProjectDtoList(List<Project> projects);
+
+    @Mapping(source = "techStack", target = "technologies")
+    @Mapping(source = "team", target = "requiredPositions")
+    ProjectInfoDto projectToProjectInfoDto(Project project);
 }
